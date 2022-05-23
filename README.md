@@ -1,6 +1,15 @@
 # i-have-attributes
 
-Simple attributes implementation
+Simple attributes implementation.
+
+![tests](https://github.com/jeyroik/i-have-attributes/workflows/PHP%20Composer/badge.svg?branch=master&event=push)
+![codecov.io](https://codecov.io/gh/jeyroik/i-have-attributes/coverage.svg?branch=master)
+<a href="https://github.com/phpstan/phpstan"><img src="https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat" alt="PHPStan Enabled"></a> 
+<a href="https://codeclimate.com/github/jeyroik/i-have-attributes/maintainability"><img src="https://api.codeclimate.com/v1/badges/3f008f970f7d952c1532/maintainability" /></a>
+[![Latest Stable Version](https://poser.pugx.org/jeyroik/i-have-attributes/v)](//packagist.org/packages/jeyroik/i-have-attributes)
+[![Total Downloads](https://poser.pugx.org/jeyroik/i-have-attributes/downloads)](//packagist.org/packages/jeyroik/i-have-attributes)
+[![Dependents](https://poser.pugx.org/jeyroik/i-have-attributes/dependents)](//packagist.org/packages/jeyroik/i-have-attributes)
+
 
 # Usage
 
