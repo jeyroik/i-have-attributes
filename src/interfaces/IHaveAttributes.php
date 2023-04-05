@@ -1,7 +1,7 @@
 <?php
 namespace jeyroik\interfaces;
 
-interface IHaveAttributes extends \ArrayAccess, \Iterator
+interface IHaveAttributes extends \ArrayAccess, \Iterator, \JsonSerializable
 {
     public function __construct(array $attributes);
 

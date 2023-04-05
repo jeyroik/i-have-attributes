@@ -28,6 +28,8 @@ $something = new class ([
 $this->assertEquals('v1', $something->getAttribute('p1'));
 $this->assertEquals('v1', $something['p1']);
 
+$this->assertEquals('{"p1":"v1","p2":"v2"}', json_encode($something));
+
 foreach($something as $name => $value) {
     if ($name == 'p2') {
         $this->assertEquals('v2', $value);

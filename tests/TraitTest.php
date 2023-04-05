@@ -18,6 +18,14 @@ class TraitTest extends TestCase
         $this->assertEquals('v1', $something->getAttribute('p1'));
         $this->assertEquals('v1', $something['p1']);
 
+        $this->assertEquals('{"p1":"v1","p2":"v2"}', json_encode($something));
+        
+        $encoded = json_encode($something);
+        $decoded = json_decode($encoded, true);
+
+        $this->assertEquals('v1', $decoded['p1']);
+        $this->assertEquals('v2', $decoded['p2']);
+
         foreach($something as $name => $value) {
             if ($name == 'p2') {
                 $this->assertEquals('v2', $value);
