@@ -33,6 +33,11 @@ trait THasAttributes
         return $this->attributes ?? [];
     }
 
+    public function jsonSerialize()
+    {
+        return $this->attributes;
+    }
+
     /**
      * @param $name
      * @return bool
