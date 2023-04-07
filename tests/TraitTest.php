@@ -42,5 +42,11 @@ class TraitTest extends TestCase
             ['p2' => 'v2.1', 'p3' => 'v3'],
             $something->__toArray()
         );
+
+        $withoutAttrs = new class () implements IHaveAttributes {
+            use THasAttributes;
+        };
+
+        $this->assertFalse(isset($withoutAttrs['anything']));
     }
 }

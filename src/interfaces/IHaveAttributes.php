@@ -3,7 +3,7 @@ namespace jeyroik\interfaces;
 
 interface IHaveAttributes extends \ArrayAccess, \Iterator, \JsonSerializable
 {
-    public function __construct(array $attributes);
+    public function __construct(array $attributes = []);
 
     public function getAttribute(string $name, $default = null): mixed;
 
