@@ -12,7 +12,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --testdox --coverage-clover=coverage.xml --debug tests",
+        "test": "vendor/bin/phpunit --testdox tests",
         "stan": "vendor/bin/phpstan analyse -l 5 src"
     }
 }
