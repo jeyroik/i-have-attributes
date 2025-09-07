@@ -13,7 +13,7 @@ Simple attributes implementation.
 
 # Usage
 
-See tests
+See tests for details.
 
 `$ composer test`
 
@@ -26,6 +26,7 @@ $something = new class ([
 };
 
 $this->assertEquals('v1', $something->getAttribute('p1'));
+$this->assertEquals('v1', $something->getAttributeString('p1'));
 $this->assertEquals('v1', $something['p1']);
 
 $this->assertEquals('{"p1":"v1","p2":"v2"}', json_encode($something));
