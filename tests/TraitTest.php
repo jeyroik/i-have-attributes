@@ -49,4 +49,58 @@ class TraitTest extends TestCase
 
         $this->assertFalse(isset($withoutAttrs['anything']));
     }
+
+    public function testTypes()
+    {
+        $p4 = new class ([
+            'p' => 'some'
+        ]) implements IHaveAttributes {
+            use THasAttributes;
+        };
+
+        $p5 = new class ('some') {
+            protected string $some = '';
+
+            public function __construct($some)
+            {
+                $this->some = $some;
+            }
+        };
+
+        $something = new class ([
+            'p1' => 'string',
+            'p2' => 1,
+            'p3' => ['array'],
+            'p4' => $p4,
+            'p5' => $p5
+        ]) implements IHaveAttributes {
+            use THasAttributes;
+        };
+
+        $this->assertEquals('string', $something->getAttribute('p1'));
+        $this->assertEquals('string', $something->getAttributeString('p1'));
+        $this->assertEquals(0, $something->getAttributeInt('p1'));
+        $this->assertEquals(['string'], $something->getAttributeArray('p1'));
+
+        $this->assertEquals(1, $something->getAttribute('p2'));
+        $this->assertEquals('1', $something->getAttributeString('p2'));
+        $this->assertEquals(1, $something->getAttributeInt('p2'));
+        $this->assertEquals([1], $something->getAttributeArray('p2'));
+
+        $this->assertEquals(['array'], $something->getAttribute('p3'));
+        $this->assertEquals('', $something->getAttributeString('p3'));
+        $this->assertEquals(0, $something->getAttributeInt('p3'));
+        $this->assertEquals(['array'], $something->getAttributeArray('p3'));
+
+        $this->assertEquals($p4, $something->getAttribute('p4'));
+        $this->assertEquals('', $something->getAttributeString('p4'));
+        $this->assertEquals(0, $something->getAttributeInt('p4'));
+        $this->assertEquals(['p' => 'some'], $something->getAttributeArray('p4'));
+        $this->assertEquals([$p4], $something->getAttributeArray('p4', unpackSelf: false));
+
+        $this->assertEquals($p5, $something->getAttribute('p5'));
+        $this->assertEquals('', $something->getAttributeString('p5'));
+        $this->assertEquals(0, $something->getAttributeInt('p5'));
+        $this->assertEquals([$p5], $something->getAttributeArray('p5'));
+    }
 }

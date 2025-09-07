@@ -1,6 +1,8 @@
 <?php
 namespace jeyroik\components;
 
+use jeyroik\interfaces\IHaveAttributes;
+
 /**
  * Implements IHaveAttributes interface
  */
@@ -28,12 +30,39 @@ trait THasAttributes
         return $this->attributes[$name] ?? $default;
     }
 
+    public function getAttributeInt(string $name, int $default = 0): int
+    {
+        $a = $this->getAttribute($name, $default);
+
+        return is_array($a) || is_object($a) ? $default : (int) $a;
+    }
+
+    public function getAttributeString(string $name, string $default = ''): string
+    {
+        $a = $this->getAttribute($name, $default);
+
+        return is_array($a) || is_object($a) ? $default : (string) $a;
+    }
+
+    public function getAttributeArray(string $name, array $default = [], bool $unpackSelf = true): array
+    {
+        $a = $this->getAttribute($name, $default);
+
+        if (is_object($a)) {
+            return $a instanceof IHaveAttributes 
+                        ? ($unpackSelf ? $a->__toArray() : [$a]) 
+                        : [$a];
+        }
+
+        return is_array($a) ? (array) $a : [$a];
+    }
+
     public function __toArray(): array
     {
         return $this->attributes ?? [];
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->attributes;
     }
@@ -42,7 +71,7 @@ trait THasAttributes
      * @param $name
      * @return bool
      */
-    public function __isset($name)
+    public function __isset($name): bool
     {
         return isset($this->config[$name]);
     }
@@ -51,7 +80,7 @@ trait THasAttributes
      * @param array $data
      * @return $this
      */
-    public function __merge(array $data)
+    public function __merge(array $data): static
     {
         foreach ($data as $key => $value) {
             $this->attributes[$key] = $value;
@@ -65,7 +94,7 @@ trait THasAttributes
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->attributes[$offset]);
     }
@@ -75,7 +104,7 @@ trait THasAttributes
      *
      * @return mixed|null
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->attributes[$offset] ?? null;
     }
@@ -84,7 +113,7 @@ trait THasAttributes
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->attributes[$offset] = $value;
     }
@@ -92,7 +121,7 @@ trait THasAttributes
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->attributes[$offset]);
     }
@@ -100,7 +129,7 @@ trait THasAttributes
     /**
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->keyMap[$this->currentKey]);
     }
@@ -108,7 +137,7 @@ trait THasAttributes
     /**
      * @return string|null
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->keyMap[$this->currentKey] ?? null;
     }
@@ -116,7 +145,7 @@ trait THasAttributes
     /**
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->currentKey++;
     }
@@ -124,7 +153,7 @@ trait THasAttributes
     /**
      * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->attributes[$this->keyMap[$this->currentKey]];
     }
@@ -132,7 +161,7 @@ trait THasAttributes
     /**
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->currentKey = 0;
     }
